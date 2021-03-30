@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <!-- Define Persistence Unit -->
+  <persistence-unit name="bibliotecaPU" transaction-type="JTA">
+    <jta-data-source>jdbc/library</jta-data-source>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Ejemplares</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Prestamos</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Libro</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.TipoFinalizacionDeReserva</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.MultasUsuarios</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Reservas</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.DireccionUsuarios</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Usuarios</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.EstadoUsuarios</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RolesUsuarios</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
+</persistence>
