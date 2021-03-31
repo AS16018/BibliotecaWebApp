@@ -12,7 +12,7 @@ import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.DireccionUsuarios;
 
 /**
  *
- * @author aragon598
+ * @author christian
  */
 @Stateless
 public class DireccionUsuariosFacade extends AbstractFacade<DireccionUsuarios> {

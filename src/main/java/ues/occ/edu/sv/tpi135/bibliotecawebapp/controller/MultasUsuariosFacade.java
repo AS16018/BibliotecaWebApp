@@ -12,7 +12,7 @@ import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.MultasUsuarios;
 
 /**
  *
- * @author aragon598
+ * @author christian
  */
 @Stateless
 public class MultasUsuariosFacade extends AbstractFacade<MultasUsuarios> {

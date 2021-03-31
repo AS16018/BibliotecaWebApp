@@ -12,7 +12,7 @@ import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Ejemplares;
 
 /**
  *
- * @author aragon598
+ * @author christian
  */
 @Stateless
 public class EjemplaresFacade extends AbstractFacade<Ejemplares> {

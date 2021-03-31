@@ -6,49 +6,62 @@
 package ues.occ.edu.sv.tpi135.bibliotecawebapp.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author christian
  */
 @Entity
-@Table(name = "roles_usuarios", catalog = "biblioteca", schema = "")
+@Table(name = "roles_usuario", catalog = "biblioteca", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "RolesUsuarios.findAll", query = "SELECT r FROM RolesUsuarios r")})
-public class RolesUsuarios implements Serializable {
+    @NamedQuery(name = "RolesUsuario.findAll", query = "SELECT r FROM RolesUsuario r")})
+public class RolesUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id_rol", nullable = false)
     private Integer idRol;
-    @Size(max = 15)
-    @Column(name = "rol", length = 15)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "rol", nullable = false, length = 20)
     private String rol;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne
-    private Usuarios idUsuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "descripci\u00f3n", nullable = false, length = 100)
+    private String descripción;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRol")
+    private List<Usuarios> usuariosList;
 
-    public RolesUsuarios() {
+    public RolesUsuario() {
     }
 
-    public RolesUsuarios(Integer idRol) {
+    public RolesUsuario(Integer idRol) {
         this.idRol = idRol;
+    }
+
+    public RolesUsuario(Integer idRol, String rol, String descripción) {
+        this.idRol = idRol;
+        this.rol = rol;
+        this.descripción = descripción;
     }
 
     public Integer getIdRol() {
@@ -67,12 +80,21 @@ public class RolesUsuarios implements Serializable {
         this.rol = rol;
     }
 
-    public Usuarios getIdUsuario() {
-        return idUsuario;
+    public String getDescripción() {
+        return descripción;
     }
 
-    public void setIdUsuario(Usuarios idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setDescripción(String descripción) {
+        this.descripción = descripción;
+    }
+
+    @XmlTransient
+    public List<Usuarios> getUsuariosList() {
+        return usuariosList;
+    }
+
+    public void setUsuariosList(List<Usuarios> usuariosList) {
+        this.usuariosList = usuariosList;
     }
 
     @Override
@@ -85,10 +107,10 @@ public class RolesUsuarios implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RolesUsuarios)) {
+        if (!(object instanceof RolesUsuario)) {
             return false;
         }
-        RolesUsuarios other = (RolesUsuarios) object;
+        RolesUsuario other = (RolesUsuario) object;
         if ((this.idRol == null && other.idRol != null) || (this.idRol != null && !this.idRol.equals(other.idRol))) {
             return false;
         }
@@ -97,7 +119,7 @@ public class RolesUsuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RolesUsuarios[ idRol=" + idRol + " ]";
+        return "ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RolesUsuario[ idRol=" + idRol + " ]";
     }
     
 }

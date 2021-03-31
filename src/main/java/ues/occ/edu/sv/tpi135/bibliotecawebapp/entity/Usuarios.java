@@ -63,14 +63,15 @@ public class Usuarios implements Serializable {
     private List<MultasUsuarios> multasUsuariosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Reservas> reservasList;
-    @OneToMany(mappedBy = "idUsuario")
-    private List<RolesUsuarios> rolesUsuariosList;
     @JoinColumn(name = "id_direccion", referencedColumnName = "id_direccion", nullable = false)
     @ManyToOne(optional = false)
     private DireccionUsuarios idDireccion;
     @JoinColumn(name = "id_estado", referencedColumnName = "id_estado", nullable = false)
     @ManyToOne(optional = false)
     private EstadoUsuarios idEstado;
+    @JoinColumn(name = "id_rol", referencedColumnName = "id_rol", nullable = false)
+    @ManyToOne(optional = false)
+    private RolesUsuario idRol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Prestamos> prestamosList;
 
@@ -152,15 +153,6 @@ public class Usuarios implements Serializable {
         this.reservasList = reservasList;
     }
 
-    @XmlTransient
-    public List<RolesUsuarios> getRolesUsuariosList() {
-        return rolesUsuariosList;
-    }
-
-    public void setRolesUsuariosList(List<RolesUsuarios> rolesUsuariosList) {
-        this.rolesUsuariosList = rolesUsuariosList;
-    }
-
     public DireccionUsuarios getIdDireccion() {
         return idDireccion;
     }
@@ -175,6 +167,14 @@ public class Usuarios implements Serializable {
 
     public void setIdEstado(EstadoUsuarios idEstado) {
         this.idEstado = idEstado;
+    }
+
+    public RolesUsuario getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(RolesUsuario idRol) {
+        this.idRol = idRol;
     }
 
     @XmlTransient

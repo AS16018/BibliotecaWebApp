@@ -8,14 +8,14 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.controller;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RolesUsuarios;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RolesUsuario;
 
 /**
  *
- * @author aragon598
+ * @author christian
  */
 @Stateless
-public class RolesUsuariosFacade extends AbstractFacade<RolesUsuarios> {
+public class RolesUsuarioFacade extends AbstractFacade<RolesUsuario> {
 
     @PersistenceContext(unitName = "bibliotecaPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class RolesUsuariosFacade extends AbstractFacade<RolesUsuarios> {
         return em;
     }
 
-    public RolesUsuariosFacade() {
-        super(RolesUsuarios.class);
+    public RolesUsuarioFacade() {
+        super(RolesUsuario.class);
     }
     
 }

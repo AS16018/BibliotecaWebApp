@@ -13,6 +13,7 @@
     <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Usuarios</class>
     <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.EstadoUsuarios</class>
     <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RolesUsuarios</class>
+    <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RolesUsuario</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

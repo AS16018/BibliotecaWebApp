@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 
 /**
  *
- * @author aragon598
+ * @author christian
  */
 public abstract class AbstractFacade<T> {
 
@@ -41,15 +41,16 @@ public abstract class AbstractFacade<T> {
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
+        System.out.println("PASEEEEEEEEEEEEEEE");
         return getEntityManager().createQuery(cq).getResultList();
     }
 
-    public List<T> findRange(int init, int end) {
+    public List<T> findRange(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
-        q.setFirstResult(init);
-        q.setMaxResults(end);
+        q.setMaxResults(range[1] - range[0] + 1);
+        q.setFirstResult(range[0]);
         return q.getResultList();
     }
 

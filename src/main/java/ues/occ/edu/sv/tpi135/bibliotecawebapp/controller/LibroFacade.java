@@ -12,7 +12,7 @@ import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Libro;
 
 /**
  *
- * @author aragon598
+ * @author christian
  */
 @Stateless
 public class LibroFacade extends AbstractFacade<Libro> {

@@ -12,7 +12,7 @@ import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Reservas;
 
 /**
  *
- * @author aragon598
+ * @author christian
  */
 @Stateless
 public class ReservasFacade extends AbstractFacade<Reservas> {

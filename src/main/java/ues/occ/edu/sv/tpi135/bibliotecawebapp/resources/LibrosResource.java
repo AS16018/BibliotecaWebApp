@@ -49,6 +49,7 @@ public class LibrosResource implements Serializable{
         try {
             if (librofacade != null) {
                 salida = librofacade.findAll();
+                System.out.println("LA LISTAAA" + salida);
             }
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
