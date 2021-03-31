@@ -9,6 +9,6 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.resources;
  *
  * @author christian
  */
-public class DatosResource {
+public class UsuariosResource {
     
 }

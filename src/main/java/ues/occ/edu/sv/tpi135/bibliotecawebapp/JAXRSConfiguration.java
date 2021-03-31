@@ -24,7 +24,7 @@ public class JAXRSConfiguration extends Application{
     }
     
     private void agregarLosRecursos(Set<Class<?>> recursos){
-        recursos.add(ues.occ.edu.sv.tpi135.bibliotecawebapp.resources.DatosResource.class);
+        recursos.add(ues.occ.edu.sv.tpi135.bibliotecawebapp.resources.UsuariosResource.class);
     }
     
 }
