@@ -2,7 +2,7 @@
 <persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
   <!-- Define Persistence Unit -->
   <persistence-unit name="bibliotecaPU" transaction-type="JTA">
-    <jta-data-source>jdbc/library</jta-data-source>
+    <jta-data-source>java:app/biblioteca</jta-data-source>
     <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Ejemplares</class>
     <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Prestamos</class>
     <class>ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Libro</class>
