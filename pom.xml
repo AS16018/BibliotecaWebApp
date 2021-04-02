@@ -23,16 +23,22 @@
             <version>${jakartaee}</version>
             <scope>provided</scope>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>fish.payara.extras</groupId>
             <artifactId>payara-micro</artifactId>
             <version>5.201</version>
             <scope>compile</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.7.1</version>
+        </dependency>
     </dependencies>
     
-     <build>
-         <finalName>BibliotecaWebApp-1.0-SNAPSHOT</finalName>
+    <build>
+        <finalName>BibliotecaWebApp-1.0-SNAPSHOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
