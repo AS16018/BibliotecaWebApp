@@ -90,24 +90,22 @@ public class UsuariosResource implements Serializable {
     }
 
     @POST
-    @Path("crearUsuario")
+    @Path("crear")
     @Consumes(value = MediaType.APPLICATION_JSON)
     public Response agregarUsuario(Usuarios user) {
         DireccionUsuarios direccion;
-        
-        
         try {
             if (usuariosFacade != null && user != null) {
-                
+
                 user.setIdUsuario(this.obtenerUltimoId());
                 direccion = user.getIdDireccion();
-                direccion.setIdDireccion(user.getIdUsuario());
-                direccionFacade.create(direccion);
+                if (direccionFacade != null && direccion != null) {
+                    direccion.setIdDireccion(user.getIdUsuario());
+                    direccionFacade.create(direccion);
+                }
                 DireccionUsuarios dire = new DireccionUsuarios(direccion.getIdDireccion());
                 user.setIdDireccion(dire);
                 usuariosFacade.create(user);
-                
-                
             }
             if (user == null) {
                 return Response.status(Response.Status.BAD_REQUEST).entity("Usuario nulo").build();
@@ -122,9 +120,14 @@ public class UsuariosResource implements Serializable {
     @PUT
     @Consumes(value = MediaType.APPLICATION_JSON)
     public Response modificarUsuario(Usuarios user) {
-
+        DireccionUsuarios direccion;
         try {
             if (usuariosFacade != null && user != null) {
+                
+                direccion = user.getIdDireccion();
+                if (direccionFacade != null && direccion != null) {
+                    direccionFacade.edit(direccion);
+                } 
                 usuariosFacade.edit(user);
             }
             if (user == null) {
@@ -183,6 +186,3 @@ public class UsuariosResource implements Serializable {
         return idMayor;
     }
 }
-
-
-
