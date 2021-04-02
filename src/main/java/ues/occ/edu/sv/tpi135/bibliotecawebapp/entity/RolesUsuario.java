@@ -7,6 +7,7 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,6 +50,7 @@ public class RolesUsuario implements Serializable {
     @Column(name = "descripci\u00f3n", nullable = false, length = 100)
     private String descripción;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRol")
+    @JsonbTransient
     private List<Usuarios> usuariosList;
 
     public RolesUsuario() {

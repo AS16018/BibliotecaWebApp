@@ -7,6 +7,7 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,6 +49,7 @@ public class Libro implements Serializable {
     @Column(name = "num_paginas")
     private Integer numPaginas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLibro")
+    @JsonbTransient
     private List<Ejemplares> ejemplaresList;
 
     public Libro() {

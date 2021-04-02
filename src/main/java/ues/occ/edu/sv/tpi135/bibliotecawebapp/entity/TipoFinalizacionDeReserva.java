@@ -7,6 +7,7 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,6 +44,7 @@ public class TipoFinalizacionDeReserva implements Serializable {
     @Column(name = "tipo_finalizacion", length = 100)
     private String tipoFinalizacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoFinalizacion")
+    @JsonbTransient
     private List<Reservas> reservasList;
 
     public TipoFinalizacionDeReserva() {

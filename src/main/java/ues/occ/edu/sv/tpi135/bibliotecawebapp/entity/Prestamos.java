@@ -8,6 +8,7 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,6 +50,7 @@ public class Prestamos implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinalizacion;
     @ManyToMany(mappedBy = "prestamosList")
+    @JsonbTransient
     private List<Ejemplares> ejemplaresList;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
     @ManyToOne(optional = false)

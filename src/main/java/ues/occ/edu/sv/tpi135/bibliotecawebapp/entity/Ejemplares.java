@@ -8,6 +8,7 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -55,11 +56,13 @@ public class Ejemplares implements Serializable {
         @JoinColumn(name = "id_ejemplar", referencedColumnName = "id_ejemplar", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "id_prestamo", referencedColumnName = "id_prestamo", nullable = false)})
     @ManyToMany
+    @JsonbTransient
     private List<Prestamos> prestamosList;
     @JoinColumn(name = "id_libro", referencedColumnName = "id_libro", nullable = false)
     @ManyToOne(optional = false)
     private Libro idLibro;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEjemplar")
+    @JsonbTransient
     private List<Reservas> reservasList;
 
     public Ejemplares() {
@@ -140,5 +143,5 @@ public class Ejemplares implements Serializable {
     public String toString() {
         return "ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Ejemplares[ idEjemplar=" + idEjemplar + " ]";
     }
-    
+
 }
