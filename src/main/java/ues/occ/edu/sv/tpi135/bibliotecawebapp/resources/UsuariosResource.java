@@ -97,8 +97,7 @@ public class UsuariosResource implements Serializable {
                     direccion.setIdDireccion(user.getIdUsuario());
                     direccionFacade.create(direccion);
                 }
-                DireccionUsuarios dire = new DireccionUsuarios(direccion.getIdDireccion());
-                user.setIdDireccion(dire);
+                user.setIdDireccion(direccion);
                 usuariosFacade.create(user);
             }
             if (user == null) {
