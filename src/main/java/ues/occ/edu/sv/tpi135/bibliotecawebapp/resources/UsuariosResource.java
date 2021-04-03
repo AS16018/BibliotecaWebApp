@@ -24,7 +24,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.DireccionUsuariosFacade;
-import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.RolesUsuarioFacade;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.UsuariosFacade;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.DireccionUsuarios;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Usuarios;
