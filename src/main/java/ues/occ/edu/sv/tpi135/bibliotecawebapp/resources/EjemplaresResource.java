@@ -30,7 +30,7 @@ import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Ejemplares;
  *
  * @author christian
  */
-@Path("Ejemplares")
+@Path("ejemplares")
 @ApplicationScoped
 public class EjemplaresResource implements Serializable {
 
