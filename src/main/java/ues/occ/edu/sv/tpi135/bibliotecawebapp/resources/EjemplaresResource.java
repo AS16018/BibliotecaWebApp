@@ -23,37 +23,32 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.DireccionUsuariosFacade;
-import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.RolesUsuarioFacade;
-import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.UsuariosFacade;
-import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.DireccionUsuarios;
-import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Usuarios;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.EjemplaresFacade;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Ejemplares;
 
 /**
  *
  * @author christian
  */
-@Path("user")
+@Path("ejemplares")
 @ApplicationScoped
-public class UsuariosResource implements Serializable {
+public class EjemplaresResource implements Serializable {
 
-    public UsuariosResource() {
-
+    public EjemplaresResource(){
+        
     }
-
+    
     @Inject
-    UsuariosFacade usuariosFacade;
-    @Inject
-    DireccionUsuariosFacade direccionFacade;
-
+    EjemplaresFacade ejemplarFacade;
+    
     @GET
     @Path("findAll")
     @Produces(value = MediaType.APPLICATION_JSON)
     public Response findAll() {
         List salida = null;
         try {
-            if (usuariosFacade != null) {
-                salida = usuariosFacade.findAll();
+            if (ejemplarFacade != null) {
+                salida = ejemplarFacade.findAll();
             }
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
@@ -71,11 +66,11 @@ public class UsuariosResource implements Serializable {
     public Response findById(@PathParam("id") Integer Id) {
 
         try {
-            if (usuariosFacade != null && Id != null) {
-                if (usuariosFacade.find(Id) == null) {
-                    return Response.status(Response.Status.NOT_FOUND).entity("Usuario no encontrado").build();
+            if (ejemplarFacade != null && Id != null) {
+                if (ejemplarFacade.find(Id) == null) {
+                    return Response.status(Response.Status.NOT_FOUND).entity("Ejemplar no encontrado").build();
                 } else {
-                    return Response.ok(usuariosFacade.find(Id)).build();
+                    return Response.ok(ejemplarFacade.find(Id)).build();
                 }
             }
         } catch (Exception ex) {
@@ -87,23 +82,15 @@ public class UsuariosResource implements Serializable {
     @POST
     @Path("crear")
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response agregarUsuario(Usuarios user) {
-        DireccionUsuarios direccion;
-        try {
-            if (usuariosFacade != null && user != null) {
+    public Response crearEjemplares(Ejemplares ejemplar) {
 
-                user.setIdUsuario(this.obtenerUltimoId());
-                direccion = user.getIdDireccion();
-                if (direccionFacade != null && direccion != null) {
-                    direccion.setIdDireccion(user.getIdUsuario());
-                    direccionFacade.create(direccion);
-                }
-                DireccionUsuarios dire = new DireccionUsuarios(direccion.getIdDireccion());
-                user.setIdDireccion(dire);
-                usuariosFacade.create(user);
+        try {   
+            if (ejemplarFacade != null && ejemplar != null) {
+                ejemplar.setIdEjemplar(this.obtenerUltimoId());
+                ejemplarFacade.create(ejemplar);
             }
-            if (user == null) {
-                return Response.status(Response.Status.BAD_REQUEST).entity("Usuario nulo").build();
+            if (ejemplar == null) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("Ejemplar nulo").build();
             }
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
@@ -114,18 +101,13 @@ public class UsuariosResource implements Serializable {
 
     @PUT
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response modificarUsuario(Usuarios user) {
-        DireccionUsuarios direccion;
+    public Response modificarEjemplares(Ejemplares ejemplar) {
+
         try {
-            if (usuariosFacade != null && user != null) {
-                
-                direccion = user.getIdDireccion();
-                if (direccionFacade != null && direccion != null) {
-                    direccionFacade.edit(direccion);
-                } 
-                usuariosFacade.edit(user);
+            if (ejemplarFacade != null && ejemplar != null) {
+                ejemplarFacade.edit(ejemplar);
             }
-            if (user == null) {
+            if (ejemplar == null) {
                 return Response.status(Response.Status.BAD_REQUEST).entity("Datos nulos").build();
             }
         } catch (Exception ex) {
@@ -138,45 +120,43 @@ public class UsuariosResource implements Serializable {
     @DELETE
     @Path("{id}")
     @Consumes(value = MediaType.TEXT_PLAIN)
-    public Response deleteUsers(@PathParam("id") Integer id) {
-        List<Usuarios> datoEliminar = null;
+    public Response deleteEjemplares(@PathParam("id") Integer id) {
+        List<Ejemplares> datoEliminar = null;
         try {
-            if (usuariosFacade != null) {
+            if (ejemplarFacade != null) {
                 if (id != null) {
-                    datoEliminar = usuariosFacade.findAll().stream().filter(t -> id == t.getIdUsuario().intValue()).collect(Collectors.toList());
+                    datoEliminar = ejemplarFacade.findAll().stream().filter(t -> id == t.getIdEjemplar().intValue()).collect(Collectors.toList());
                 } else {
                     return Response.status(Response.Status.BAD_REQUEST).entity("El id va nulo").build();
                 }
             }
 
             if (datoEliminar.isEmpty()) {
-                return Response.status(Response.Status.NOT_FOUND).entity("Usuario no encontrado").build();
+                return Response.status(Response.Status.NOT_FOUND).entity("Ejemplar no encontrado").build();
             }
-            Usuarios datoE = datoEliminar.get(0);
-            usuariosFacade.remove(datoE);
+            Ejemplares datoE = datoEliminar.get(0);
+            ejemplarFacade.remove(datoE);
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
 
         return Response.ok().build();
     }
-
-    public Integer obtenerUltimoId() {
+    
+    public Integer obtenerUltimoId(){
         Integer idMayor = 0;
-
         try {
-
-            if (usuariosFacade != null) {
-                idMayor = usuariosFacade.findAll().stream().max((id1, id2) -> id1.getIdUsuario() - id2.getIdUsuario()).get().getIdUsuario();
+            if (ejemplarFacade != null) {
+                idMayor = ejemplarFacade.findAll().stream().max((id1, id2) -> id1.getIdEjemplar()- id2.getIdEjemplar()).get().getIdEjemplar();
             }
-
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
         if (idMayor == 0 || idMayor == null) {
             idMayor = 1;
-        } else {
-            idMayor = idMayor + 1;
+        }
+        else{
+            idMayor = idMayor+1;
         }
         return idMayor;
     }
