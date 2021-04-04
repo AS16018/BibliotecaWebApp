@@ -92,15 +92,17 @@ public class UsuariosResource implements Serializable {
         DireccionUsuarios direccion;
         try {
             if (usuariosFacade != null && user != null) {
-
-                user.setIdUsuario(this.obtenerUltimoId());
-                direccion = user.getIdDireccion();
-                if (direccionFacade != null && direccion != null) {
-                    direccion.setIdDireccion(user.getIdUsuario());
-                    direccionFacade.create(direccion);
+                if (user.getNombre() != null && user.getIdEstado().getIdEstado() != null && user.getIdRol().getIdRol() != null) {
+                    user.setIdUsuario(this.obtenerUltimoId());
+                    direccion = user.getIdDireccion();
+                    if (direccionFacade != null && direccion != null) {
+                        direccion.setIdDireccion(user.getIdUsuario());
+                        direccionFacade.create(direccion);
+                    }
+                    user.setIdDireccion(direccion);
+                    usuariosFacade.create(user);
                 }
-                user.setIdDireccion(direccion);
-                usuariosFacade.create(user);
+
             }
             if (user == null) {
                 return Response.status(Response.Status.BAD_REQUEST).entity("Usuario nulo").build();
@@ -114,32 +116,31 @@ public class UsuariosResource implements Serializable {
 
     @POST
     @Path("auth")
-    @Consumes(value = MediaType.APPLICATION_JSON )
-    public Response login(Login login){
-        List<Usuarios> usuario=null;
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    public Response login(Login login) {
+        List<Usuarios> usuario = null;
         String mensaje = null;
 
         try {
-            
-            if(usuariosFacade != null && login != null){
+
+            if (usuariosFacade != null && login != null) {
                 usuario = usuariosFacade.findAll().stream().filter(e -> e.getCorreo().equals(login.getCorreo())).collect(Collectors.toList());
             }
-            if (login == null){
-                mensaje="";
+            if (login == null) {
+                mensaje = "";
                 return Response.status(Response.Status.BAD_REQUEST).entity(mensaje).build();
             }
 
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
-        if(usuario==null || usuario.size()<1){
-            mensaje="Error. El email "+login.getCorreo()+" no está registrado.";
-            
+        if (usuario == null || usuario.size() < 1) {
+            mensaje = "Error. El email " + login.getCorreo() + " no está registrado.";
+
             return Response.status(Response.Status.NOT_ACCEPTABLE).entity(mensaje).build();
-        }
-        else if(!usuario.get(0).getPassword().equals(login.getPassword())){
-             mensaje="La contraseña que intenta ingresar es inválida, por favor intente nuevamente";
-           return Response.status(Response.Status.NOT_ACCEPTABLE).entity(mensaje).build();
+        } else if (!usuario.get(0).getPassword().equals(login.getPassword())) {
+            mensaje = "La contraseña que intenta ingresar es inválida, por favor intente nuevamente";
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(mensaje).build();
         }
 
         return Response.status(Response.Status.ACCEPTED).entity("Success login").build();
@@ -151,11 +152,11 @@ public class UsuariosResource implements Serializable {
         DireccionUsuarios direccion;
         try {
             if (usuariosFacade != null && user != null) {
-                
+
                 direccion = user.getIdDireccion();
                 if (direccionFacade != null && direccion != null) {
                     direccionFacade.edit(direccion);
-                } 
+                }
                 usuariosFacade.edit(user);
             }
             if (user == null) {
