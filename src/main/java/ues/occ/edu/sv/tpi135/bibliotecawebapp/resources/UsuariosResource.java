@@ -117,7 +117,7 @@ public class UsuariosResource implements Serializable {
     @Consumes(value = MediaType.APPLICATION_JSON )
     public Response login(Login login){
         List<Usuarios> usuario=null;
-        RespuestaLogin respuestaLogin = null;
+        String mensaje = null;
 
         try {
             
@@ -125,24 +125,24 @@ public class UsuariosResource implements Serializable {
                 usuario = usuariosFacade.findAll().stream().filter(e -> e.getCorreo().equals(login.getCorreo())).collect(Collectors.toList());
             }
             if (login == null){
-                respuestaLogin.setMensaje("Ingrese sus credenciales.");
-                return Response.status(Response.Status.BAD_REQUEST).entity(respuestaLogin).build();
+                mensaje="";
+                return Response.status(Response.Status.BAD_REQUEST).entity(mensaje).build();
             }
 
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
         if(usuario==null || usuario.size()<1){
-            respuestaLogin.setMensaje("Error. El email "+login.getCorreo()+" no está registrado.");
+            mensaje="Error. El email "+login.getCorreo()+" no está registrado.";
             
-            return Response.ok(login).build();
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(mensaje).build();
         }
         else if(!usuario.get(0).getPassword().equals(login.getPassword())){
-            respuestaLogin.setMensaje("La contraseña que intenta ingresar es inválida, por favor intente nuevamente");
-           return Response.ok(login).build();
+             mensaje="La contraseña que intenta ingresar es inválida, por favor intente nuevamente";
+           return Response.status(Response.Status.NOT_ACCEPTABLE).entity(mensaje).build();
         }
 
-        return Response.status(Response.Status.ACCEPTED).entity("Login completo").build();
+        return Response.status(Response.Status.ACCEPTED).entity("Success login").build();
     }
 
     @PUT
