@@ -26,6 +26,8 @@ import javax.ws.rs.core.Response;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.DireccionUsuariosFacade;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.UsuariosFacade;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.DireccionUsuarios;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Login;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RespuestaLogin;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Usuarios;
 
 /**
@@ -108,6 +110,39 @@ public class UsuariosResource implements Serializable {
         }
 
         return Response.ok().build();
+    }
+
+    @POST
+    @Path("auth")
+    @Consumes(value = MediaType.APPLICATION_JSON )
+    public Response login(Login login){
+        List<Usuarios> usuario=null;
+        RespuestaLogin respuestaLogin = null;
+
+        try {
+            
+            if(usuariosFacade != null && login != null){
+                usuario = usuariosFacade.findAll().stream().filter(e -> e.getCorreo().equals(login.getCorreo())).collect(Collectors.toList());
+            }
+            if (login == null){
+                respuestaLogin.setMensaje("Ingrese sus credenciales.");
+                return Response.status(Response.Status.BAD_REQUEST).entity(respuestaLogin).build();
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        if(usuario==null || usuario.size()<1){
+            respuestaLogin.setMensaje("Error. El email "+login.getCorreo()+" no está registrado.");
+            
+            return Response.ok(login).build();
+        }
+        else if(!usuario.get(0).getPassword().equals(login.getPassword())){
+            respuestaLogin.setMensaje("La contraseña que intenta ingresar es inválida, por favor intente nuevamente");
+           return Response.ok(login).build();
+        }
+
+        return Response.status(Response.Status.ACCEPTED).entity("Login completo").build();
     }
 
     @PUT
