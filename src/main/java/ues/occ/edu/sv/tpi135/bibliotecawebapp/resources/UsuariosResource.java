@@ -27,7 +27,6 @@ import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.DireccionUsuariosFacade
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.UsuariosFacade;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.DireccionUsuarios;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Login;
-import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.RespuestaLogin;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Usuarios;
 
 /**
