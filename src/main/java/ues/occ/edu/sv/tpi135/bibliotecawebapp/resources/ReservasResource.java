@@ -93,7 +93,10 @@ public class ReservasResource implements Serializable {
             if (reservasFacade != null && reserva != null) {
                 reserva.setIdReserva(this.ultimoId());
                 if (reserva.getIdUsuario().getIdEstado().getIdEstado() != 2) {
-                    noReservar = reservasFacade.findAll().stream().filter(f1 -> ((f1.getFechaIncio().compareTo(reserva.getFechaIncio()) == 0) || (f1.getFechaIncio().compareTo(reserva.getFechaIncio()) > 0) && ((f1.getFechaFinalizacion().compareTo(reserva.getFechaFinalizacion()) == 0) || (f1.getFechaFinalizacion().compareTo(reserva.getFechaFinalizacion()) < 0)))).collect(Collectors.toList());
+                    if(reservasFacade.count() == 0){
+                        reservasFacade.create(reserva);
+                    }
+                    noReservar = reservasFacade.findAll().stream().filter(f1 -> ((f1.getFechaIncio().compareTo(reserva.getFechaIncio()) == 0) || (f1.getFechaIncio().compareTo(reserva.getFechaIncio()) < 0) && ((f1.getFechaFinalizacion().compareTo(reserva.getFechaFinalizacion()) == 0) || (f1.getFechaFinalizacion().compareTo(reserva.getFechaFinalizacion()) > 0)))).collect(Collectors.toList());
                     if (noReservar.isEmpty()) {
                         reservasFacade.create(reserva);
                     } else {
