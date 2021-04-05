@@ -175,6 +175,7 @@ public class UsuariosResource implements Serializable {
     @Consumes(value = MediaType.TEXT_PLAIN)
     public Response deleteUsers(@PathParam("id") Integer id) {
         List<Usuarios> datoEliminar = null;
+        
         try {
             if (usuariosFacade != null) {
                 if (id != null) {
@@ -188,7 +189,8 @@ public class UsuariosResource implements Serializable {
                 return Response.status(Response.Status.NOT_FOUND).entity("Usuario no encontrado").build();
             }
             Usuarios datoE = datoEliminar.get(0);
-            usuariosFacade.remove(datoE);
+            
+            direccionFacade.remove(datoE.getIdDireccion());
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
