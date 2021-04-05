@@ -101,6 +101,8 @@ public class UsuariosResource implements Serializable {
                     }
                     user.setIdDireccion(direccion);
                     usuariosFacade.create(user);
+                }else{
+                    return Response.status(Response.Status.BAD_REQUEST).entity("Error al crear un nuevo usuario, verifique que los campos obligatorios no vayan nulos").build();
                 }
 
             }
