@@ -112,7 +112,7 @@ public class ReservasResource implements Serializable {
             reserva.setIdTipoFinalizacion(t);
 
             Date dateInicio = formatoDelTexto.parse(json.getString("fechaInicio"));
-            Date fechaFinalizacion = formatoDelTexto.parse(json.getString("fechaInicio"));
+            Date fechaFinalizacion = formatoDelTexto.parse(json.getString("fechaFinalizacion"));
             Date dateReserva = formatoDelTexto.parse(json.getString("fechaReserva"));
             reserva.setFechaIncio(dateInicio);
             reserva.setFechaFinalizacion(fechaFinalizacion);
@@ -123,6 +123,7 @@ public class ReservasResource implements Serializable {
         }
         System.out.println("IdReserva :" + reserva.getIdReserva());
         System.out.println("fechaInicio :" + reserva.getFechaIncio());
+        System.out.println("FECHAFINALIZACION :" + reserva.getFechaFinalizacion());
         List<Reservas> noReservar = new ArrayList<>();
         Usuarios user;
 
