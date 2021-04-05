@@ -24,7 +24,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.ReservasFacade;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.UsuariosFacade;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.EstadoUsuarios;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Reservas;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Usuarios;
 
 /**
  *
@@ -89,10 +91,15 @@ public class ReservasResource implements Serializable {
     @Produces(value = MediaType.APPLICATION_JSON)
     public Response nuevaReserva(Reservas reserva) {
         List noReservar = new ArrayList<Reservas>();
+        Usuarios user;
+        
+        
+        
         try {
             if (reservasFacade != null && reserva != null) {
                 reserva.setIdReserva(this.ultimoId());
-                if (reserva.getIdUsuario().getIdEstado().getIdEstado() != 2) {
+                user= usuarioFacade.find(reserva.getIdUsuario().getIdUsuario());
+                if (user.getIdEstado().getIdEstado() != 2) {
                     if(reservasFacade.count() == 0){
                         reservasFacade.create(reserva);
                     }
@@ -164,7 +171,7 @@ public class ReservasResource implements Serializable {
 
         try {
 
-            if (reservasFacade != null) {
+            if (reservasFacade != null && reservasFacade.count() > 0) {
                 id = reservasFacade.findAll().stream().max((id1, id2) -> id1.getIdReserva() - id2.getIdReserva()).get().getIdReserva();
             }
 
