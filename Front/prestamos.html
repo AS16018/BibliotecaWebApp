@@ -113,19 +113,17 @@
                                                         <th>Titulo del libro</th>
                                                         <th>Autor</th>
                                                         <th><strong>Usuario</strong><br></th>
-                                                        <th>Fecha de Prestamo</th>
-                                                        <th>Fecha de Entrega</th>
+                                                        <th>Fecha de Reserva</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="(devo, index) in devoluciones" v-show="buscar(index)" v-on:click="devolucionSelected=index;" v-bind:class="{ 'font-weight-bold' : devolucionSelected==index }">
-                                                        <td><i class="fa fa-arrow-right" v-show="devolucionSelected==index"></i>{{devo.titulo}}</td>
-                                                        <td>{{devo.autor}}<br><br></td>
-                                                        <td>{{devo.usuario}}<br></td>
-                                                        <td>{{devo.fecha_Prestamo}}<br></td>
-                                                        <td>{{devo.fecha_Entrega}}<br></td>
-                                                        <td><i class="fa fa-check-square-o" data-toggle="tooltip" data-bss-tooltip="" style="color: var(--success);font-size: 20px;" title="RECIBIR LIBRO"></i></td>
+                                                    <tr v-for="(reser, index) in reservas" v-show="reser.estadoReserva==1&amp;&amp;buscar(index)" v-on:click="reservaSelected=index;" v-bind:class="{ 'font-weight-bold' : reservaSelected==index }">
+                                                        <td>{{reser.idEjemplar.idLibro.titulo}}</td>
+                                                        <td>{{reser.idEjemplar.idLibro.autor}}<br><br></td>
+                                                        <td>{{reser.idUsuario.nombre}}<br></td>
+                                                        <td>{{reser.fechaReserva.substring(0,10)}}<br></td>
+                                                        <td><button class="btn btn-sm" data-toggle="tooltip" data-bss-tooltip="" type="button" title="RECIBIR" v-on:click="modificarReserva"><i class="fa fa-check" style="color: var(--blue);font-size: 20px;"></i></button></td>
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
@@ -152,6 +150,7 @@
                                                         <th>Titulo del libro</th>
                                                         <th>Autor</th>
                                                         <th><strong>Usuario</strong><br></th>
+                                                        <th><strong>Estado de Reserva</strong><br></th>
                                                         <th>Fecha de Reserva</th>
                                                         <th></th>
                                                     </tr>
@@ -161,8 +160,9 @@
                                                         <td>{{reser.idEjemplar.idLibro.titulo}}</td>
                                                         <td>{{reser.idEjemplar.idLibro.autor}}<br><br></td>
                                                         <td>{{reser.idUsuario.nombre}}<br></td>
+                                                        <td><i class="fa fa-check" style="font-size: 20px;color: var(--success);" v-show="reser.estadoReserva==1"></i><i class="fa fa-remove" style="font-size: 20px;color: var(--danger);" v-show="reser.estadoReserva==0"></i></td>
                                                         <td>{{reser.fechaReserva.substring(0,10)}}<br></td>
-                                                        <td><button class="btn btn-sm" type="button" v-on:click="mostrarEliminar"><i class="fa fa-trash-o" data-toggle="tooltip" data-bss-tooltip="" style="color: #dc3545;font-size: 20px;" title="ELIMINAR"></i></button></td>
+                                                        <td><button class="btn btn-sm" data-toggle="tooltip" data-bss-tooltip="" type="button" v-on:click="mostrarEliminar" title="ELIMINAR"><i class="fa fa-trash-o" style="color: #dc3545;font-size: 20px;"></i></button></td>
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>

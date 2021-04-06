@@ -1,4 +1,3 @@
-
 var vuePrestamos= new Vue({
     el: "#AdminPrestamos",
     data: {
@@ -75,28 +74,10 @@ var vuePrestamos= new Vue({
 
 var vueDevoluciones= new Vue({
     el: "#AdminDevoluciones",
-    data: {
+     data: {
         textoBusqueda:"",
-        devolucionSelected: 0,
-        devoluciones:[   
-          {
-            "titulo": "Harry",
-            "autor": "Potter",
-            "usuario": "Maria",
-            "fecha_Prestamo": "2021/01/28",
-            "fecha_Entrega": "2021/11/28",
-            "devuelto": false,
-          },
-          {
-            "titulo": "Nose",
-            "autor": "Chepe",
-            "usuario": "Alexis",
-            "fecha_Prestamo": "2021/01/28",
-            "fecha_Entrega": "2021/11/28",
-            "devuelto": false,
-          },
-        ],
-        
+        reservaSelected: 0,
+        reservas:[],
     },
     methods:{
         buscar:function(x){
@@ -104,9 +85,9 @@ var vueDevoluciones= new Vue({
             if(this.textoBusqueda=="")
                 return true;
                     
-            var cad=this.devoluciones[x].titulo + 
-                this.devoluciones[x].usuario +
-                this.devoluciones[x].autor;
+            var cad=this.reservas[x].idEjemplar.idLibro.titulo + 
+                this.reservas[x].idUsuario.usuario +
+                this.reservas[x].idEjemplar.idLibro.autor;
             cad=cad.toUpperCase();
             
             if(cad.indexOf(this.textoBusqueda.toUpperCase())>=0)
@@ -114,7 +95,32 @@ var vueDevoluciones= new Vue({
             else
                 return false;  
         },
+        
+        cargarDatos: function(){
+            //cargando las reservas
+            axios.get('https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/reservas/findAll')
+                .then(function (res) {
+                    vueDevoluciones.reservas=res.data;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+        },
+        modificarReserva: function(){
+            this.reservas[this.reservaSelected].estadoReserva==false;
+           axios.put('https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/reservas/',this.reservas[this.reservaSelected])
+                .then(function (res) {
+                    console.log("UPDATED RESERVA");
+                     })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
     },
+    mounted:function(){
+       this.cargarDatos();
+    }, 
  });
 
 var vueReservaciones= new Vue({
@@ -149,9 +155,9 @@ var vueReservaciones= new Vue({
             if(this.textoBusqueda=="")
                 return true;
                     
-            var cad=this.reservas[x].titulo + 
-                this.reservas[x].usuario +
-                this.reservas[x].autor;
+            var cad=this.reservas[x].idEjemplar.idLibro.titulo + 
+                this.reservas[x].idUsuario.usuario +
+                this.reservas[x].idEjemplar.idLibro.autor;
             cad=cad.toUpperCase();
             
             if(cad.indexOf(this.textoBusqueda.toUpperCase())>=0)
@@ -198,7 +204,7 @@ var vueReservaciones= new Vue({
         },
         agregarReserva: function(){
             this.usuarioSelected=JSON.parse(localStorage.getItem("usuarioNo"));
-            this.nuevaReserva.idUsuario.idUsuario=this.usuarios[this.usuarioSelected].idUsuario+1;
+            this.nuevaReserva.idUsuario.idUsuario=this.usuarios[this.usuarioSelected].idUsuario;
             this.nuevaReserva.idEjemplar.idEjemplar=2;
            axios.post('https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/reservas/crear/',this.nuevaReserva)
                 .then(function (res) {
@@ -210,9 +216,7 @@ var vueReservaciones= new Vue({
                 });
         },
         eliminarReserva: function(){
-            this.usuarioSelected=JSON.parse(localStorage.getItem("usuarioNo"));
-            console.log();
-            axios.delete('https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/reservas/libros/'+ this.reservas[this.reservaSelected].idReserva)
+            axios.delete('https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/reservas/'+ this.reservas[this.reservaSelected].idReserva)
                 .then(function (res) {
                     console.log("DELETE RESERVA");
                     vueReservaciones.cargarDatos();
