@@ -82,6 +82,8 @@ public class LibrosResourceTest {
                 Mockito.doThrow(Exception.class).when(libroFacadeMock).find(Mockito.anyInt());//cubrimos el escenario en el que se produzca una excepcion al momento de llamar al metodo findAll
             });
             librito.findById(num);
+            
+            Assertions.assertEquals(Response.noContent().build().getStatus(), librito.findById(null).getStatus());
 
         } catch (Exception e) {
         }
