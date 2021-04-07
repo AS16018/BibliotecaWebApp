@@ -92,30 +92,12 @@ public class LibrosResourceTest {
     }
 
     @Test
-    public void testCrearLibro() {
-
-    }
-
-    @Test
-    public void testModificarLibro() {
-
-    }
-
-    @Test
-    public void testDeleteLibros() {
-
-    }
-
-    @Test
     public void testObtenerUltimoId() {
 
         LibrosResource librito = new LibrosResource();//instanciamos la clase a testear
         LibroFacade libroFacadeMock = Mockito.mock(LibroFacade.class);//mockeamos el facade
         librito.librofacade = libroFacadeMock;
         Integer id = null;
-        //Optional<Libro> opt = ;
-       // Stream streamMock = Mockito.mock(Stream.class);
-      //  librito.librofacade.findAll().stream() = streamMock;
         List<Libro> listaLibros = new ArrayList();
         listaLibros.add(new Libro(1));
         try {
