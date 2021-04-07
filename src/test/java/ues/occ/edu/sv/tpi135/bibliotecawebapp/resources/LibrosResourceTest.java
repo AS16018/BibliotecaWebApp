@@ -7,8 +7,9 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.resources;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 import javax.ws.rs.core.Response;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -84,6 +85,7 @@ public class LibrosResourceTest {
             librito.findById(num);
             
             Assertions.assertEquals(Response.noContent().build().getStatus(), librito.findById(null).getStatus());
+            
 
         } catch (Exception e) {
         }
@@ -107,5 +109,32 @@ public class LibrosResourceTest {
     @Test
     public void testObtenerUltimoId() {
 
+        LibrosResource librito = new LibrosResource();//instanciamos la clase a testear
+        LibroFacade libroFacadeMock = Mockito.mock(LibroFacade.class);//mockeamos el facade
+        librito.librofacade = libroFacadeMock;
+        Integer id = null;
+        //Optional<Libro> opt = ;
+       // Stream streamMock = Mockito.mock(Stream.class);
+      //  librito.librofacade.findAll().stream() = streamMock;
+        List<Libro> listaLibros = new ArrayList();
+        listaLibros.add(new Libro(1));
+        try {
+            Mockito.when(libroFacadeMock.findAll()).thenReturn(listaLibros);
+            id = listaLibros.get(0).getIdLibro();
+            librito.obtenerUltimoId();
+        } catch (Exception e) {
+        }
+        
+        try {
+            assertThrows(Exception.class, () -> {
+                Mockito.doThrow(Exception.class).when(libroFacadeMock).findAll();//cubrimos el escenario en el que se produzca una excepcion al momento de llamar al metodo findAll
+            });
+            
+            librito.obtenerUltimoId();
+        } catch (Exception e) {
+        }
+        
+        
+        
     }
 }
