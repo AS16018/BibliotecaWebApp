@@ -7,6 +7,7 @@ package ues.occ.edu.sv.tpi135.bibliotecawebapp.resources;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -16,7 +17,9 @@ import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.DireccionUsuariosFacade;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.controller.UsuariosFacade;
+import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.DireccionUsuarios;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Login;
 import ues.occ.edu.sv.tpi135.bibliotecawebapp.entity.Usuarios;
 
@@ -103,6 +106,36 @@ public class UsuariosResourceTest {
     public void testAgregarUsuario() {
         System.out.println("agregarUsuario");
         
+        UsuariosResource userR = new UsuariosResource();
+        
+        UsuariosResource userRMock = Mockito.mock(UsuariosResource.class);
+        UsuariosFacade userFacadeMock = Mockito.mock(UsuariosFacade.class);
+        DireccionUsuariosFacade direccionFaMock = Mockito.mock(DireccionUsuariosFacade.class);
+        userR.usuariosFacade = userFacadeMock;
+        userR.direccionFacade = direccionFaMock;
+        Usuarios user = Mockito.mock(Usuarios.class);
+            DireccionUsuarios direccion = user.getIdDireccion();
+        try {
+            
+            direccion.setIdDireccion(user.getIdUsuario());
+            
+            direccionFaMock.create(direccion);
+            userFacadeMock.create(user);
+            Mockito.when(userR.agregarUsuario(user)).thenReturn(Response.ok().build());
+            userR.agregarUsuario(user);
+            
+            
+        } catch (Exception e) {
+        }
+        try {
+            Assertions.assertThrows(Exception.class,() ->{
+                Mockito.doThrow(Exception.class).when(direccionFaMock).create(direccion) ;
+            });
+            Assertions.assertThrows(Exception.class,() ->{
+                Mockito.doThrow(Exception.class).when(userFacadeMock).create(user) ;
+            });
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -139,6 +172,29 @@ public class UsuariosResourceTest {
     public void testObtenerUltimoId() {
         System.out.println("obtenerUltimoId");
         
+        UsuariosResource userR = new UsuariosResource();
+        UsuariosFacade userFacade = Mockito.mock(UsuariosFacade.class);
+        userR.usuariosFacade = userFacade;
+        Integer id = null;
+        
+        try {
+            List<Usuarios> usuarios = new ArrayList<>();
+            usuarios.add(new Usuarios(1));
+            usuarios.add(new Usuarios(2));
+            
+            Mockito.when(userFacade.findAll()).thenReturn(usuarios);
+            id = usuarios.size();
+            id = id +1;
+            userR.obtenerUltimoId();
+        } catch (Exception e) {
+        }
+        try {
+            Assertions.assertThrows(Exception.class,()->{
+                Mockito.doThrow(Exception.class).when(userFacade).findAll().stream().max((id1, id2) -> id1.getIdUsuario() - id2.getIdUsuario()).get().getIdUsuario();
+            });
+            userR.obtenerUltimoId();
+        } catch (Exception e) {
+        }
     }
     
 }

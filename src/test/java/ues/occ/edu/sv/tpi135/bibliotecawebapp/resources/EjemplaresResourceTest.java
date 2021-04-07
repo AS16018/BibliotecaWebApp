@@ -132,6 +132,30 @@ public class EjemplaresResourceTest {
     @Test
     public void testObtenerUltimoId() {
         System.out.println("obtenerUltimoId");
+        EjemplaresResource ejR = new EjemplaresResource();
+        EjemplaresFacade ejFaMock = Mockito.mock(EjemplaresFacade.class);
+        ejR.ejemplarFacade = ejFaMock;
+        Integer id = null;
+        
+        try {
+            List<Ejemplares> listaEj = new ArrayList<>();
+            listaEj.add(new Ejemplares(1));
+            listaEj.add(new Ejemplares(2));
+            
+            Mockito.when(ejFaMock.findAll()).thenReturn(listaEj);
+            id = listaEj.size();
+            id = id +1;
+            ejR.obtenerUltimoId();
+            
+        } catch (Exception e) {
+        }
+        try {
+            Assertions.assertThrows(Exception.class, ()->{
+                Mockito.doThrow(Exception.class).when(ejFaMock).findAll();
+            });
+            ejR.obtenerUltimoId();
+        } catch (Exception e) {
+        }
     }
     
 }

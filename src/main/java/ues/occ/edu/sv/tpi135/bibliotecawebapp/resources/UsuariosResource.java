@@ -128,7 +128,7 @@ public class UsuariosResource implements Serializable {
                 usuario = usuariosFacade.findAll().stream().filter(e -> e.getCorreo().equals(login.getCorreo())).collect(Collectors.toList());
             }
             if (login == null) {
-                mensaje = "";
+                mensaje = "Ingresar email y password";
                 return Response.status(Response.Status.BAD_REQUEST).entity(mensaje).build();
             }
 
